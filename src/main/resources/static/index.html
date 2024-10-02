@@ -1,89 +1,51 @@
-<!-- Definiert den Dokumenttyp und legt die Sprache fest -->
-<!-- Определяет тип документа и язык -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Definiert den Zeichensatz für die Seite -->
-    <!-- Определяет кодировку символов для страницы -->
     <meta charset="UTF-8">
-
-    <!-- Stellt sicher, dass die Seite auf verschiedenen Geräten korrekt skaliert wird -->
-    <!-- Обеспечивает правильное масштабирование страницы на разных устройствах -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Titel der Webseite, der im Browser angezeigt wird -->
-    <!-- Заголовок веб-страницы, отображаемый в браузере -->
     <title>Rock-Paper-Scissors Game</title>
-
-    <!-- Verknüpft das externe CSS-Stylesheet mit der HTML-Seite -->
-    <!-- Связывает внешний CSS-стиль с HTML-страницей -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- Hauptcontainer, der das gesamte Spiel enthält -->
-<!-- Основной контейнер, содержащий всю игру -->
 <div class="container">
-    <!-- Überschrift des Spiels -->
-    <!-- Заголовок игры -->
     <h1>Rock-Paper-Scissors Game</h1>
 
-    <!-- Bereich für die Auswahlmöglichkeiten (Schere, Stein, Papier) -->
-    <!-- Область для выбора (Камень, Ножницы, Бумага) -->
     <div class="choices">
-        <!-- Auswahl für "Rock" mit Bild und Button -->
-        <!-- Выбор "Камень" с изображением и кнопкой -->
         <div class="choice" id="rock">
             <img src="images/rock.jpeg" alt="Rock">
             <button onclick="playGame('rock')">Rock</button>
         </div>
-
-        <!-- Auswahl für "Paper" mit Bild und Button -->
-        <!-- Выбор "Бумага" с изображением и кнопкой -->
         <div class="choice" id="paper">
             <img src="images/paper.jpeg" alt="Paper">
             <button onclick="playGame('paper')">Paper</button>
         </div>
-
-        <!-- Auswahl für "Scissors" mit Bild und Button -->
-        <!-- Выбор "Ножницы" с изображением и кнопкой -->
         <div class="choice" id="scissors">
             <img src="images/scissors.jpeg" alt="Scissors">
             <button onclick="playGame('scissors')">Scissors</button>
         </div>
     </div>
 
-    <!-- Bereich, der die Auswahl des Computers anzeigt -->
-    <!-- Область, отображающая выбор компьютера -->
     <div class="computer-choice">
         <h2>Computer's Choice</h2>
-
-        <!-- Container für die Animation der Computer-Auswahl -->
-        <!-- Контейнер для анимации выбора компьютера -->
         <div id="animationContainer">
             <img id="computerImageRock" src="images/rock.jpeg" alt="Rock" class="computerImage" style="display: none;">
             <img id="computerImagePaper" src="images/paper.jpeg" alt="Paper" class="computerImage" style="display: none;">
             <img id="computerImageScissors" src="images/scissors.jpeg" alt="Scissors" class="computerImage" style="display: none;">
         </div>
-
-        <!-- Text, der die Auswahl des Computers anzeigt -->
-        <!-- Текст, отображающий выбор компьютера -->
         <p id="computerChoiceText">Waiting for your choice...</p>
     </div>
 
-    <!-- Bereich, in dem das Ergebnis des Spiels angezeigt wird -->
-    <!-- Область, где отображается результат игры -->
     <div class="result">
         <h2>Result</h2>
-
-        <!-- Dynamischer Text, der das Spielergebnis zeigt -->
-        <!-- Динамический текст, отображающий результат игры -->
         <p id="resultText"></p>
+    </div>
+
+    <div class="choice" id="view-history">
+        <button onclick="window.location.href='historyHTML.html'">View History</button>
     </div>
 </div>
 
-<!-- Verknüpfung zum JavaScript-Skript, das die Logik des Spiels steuert -->
-<!-- Связь с JavaScript-скриптом, управляющим логикой игры -->
 <script src="script.js"></script>
 
 </body>

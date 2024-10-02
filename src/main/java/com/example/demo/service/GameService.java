@@ -1,7 +1,11 @@
 package com.example.demo.service;
 
+import com.example.demo.model.GameHistory;
+import com.example.demo.repository.GameHistoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -9,34 +13,40 @@ import java.util.Random;
 @Service
 public class GameService {
 
-    private final String[] choices = {"rock", "paper", "scissors"};
+    @Autowired
+    private GameHistoryRepository gameHistoryRepository;
+
+    private static final String[] choices = {"rock", "paper", "scissors"};
 
     public Map<String, String> playGame(String playerChoice) {
-        String computerChoice = getComputerChoice();
+        String computerChoice = getRandomChoice();
         String result = determineWinner(playerChoice, computerChoice);
+
+        GameHistory gameHistory = new GameHistory(playerChoice, computerChoice, result, LocalDateTime.now());
+        gameHistoryRepository.save(gameHistory);
 
         Map<String, String> response = new HashMap<>();
         response.put("playerChoice", playerChoice);
         response.put("computerChoice", computerChoice);
         response.put("result", result);
-
         return response;
     }
 
-    public String getComputerChoice() {
+    String getRandomChoice() {
         Random random = new Random();
         return choices[random.nextInt(choices.length)];
     }
 
-    public String determineWinner(String playerChoice, String computerChoice) {
+    private String determineWinner(String playerChoice, String computerChoice) {
         if (playerChoice.equals(computerChoice)) {
-            return "It's a tie!";
-        } else if ((playerChoice.equals("rock") && computerChoice.equals("scissors")) ||
-                (playerChoice.equals("paper") && computerChoice.equals("rock")) ||
-                (playerChoice.equals("scissors") && computerChoice.equals("paper"))) {
-            return "You win!";
+            return "draw";
+        } else if (
+                (playerChoice.equals("rock") && computerChoice.equals("scissors")) ||
+                        (playerChoice.equals("scissors") && computerChoice.equals("paper")) ||
+                        (playerChoice.equals("paper") && computerChoice.equals("rock"))) {
+            return "win";
         } else {
-            return "Computer wins!";
+            return "lose";
         }
     }
 }

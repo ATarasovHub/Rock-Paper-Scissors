@@ -1,74 +1,93 @@
 package com.example.demo.service;
 
+import com.example.demo.model.GameHistory;
+import com.example.demo.repository.GameHistoryRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 public class GameServiceTest {
 
-    @Test
-    void playGameTest() throws Exception {
+    @Mock
+    private GameHistoryRepository gameHistoryRepository;
 
-        // Создаем частичный мок GameService
-        GameService gameService = spy(new GameService());
+    @InjectMocks
+    private GameService gameService;
 
-        // Когда будет вызван метод getComputerChoice(),
-        // верни "scissors" и не выполняй реальный код этого метода»."
-        doReturn("scissors").when(gameService).getComputerChoice();
-
-        // Вызываем playGame с выбором игрока "paper"
-        Map<String, String> resultOfTheGame = gameService.playGame("rock");
-
-        assertEquals("You win!", resultOfTheGame.get("result"));
-        assertEquals("scissors", resultOfTheGame.get("computerChoice"));
-        assertEquals("rock", resultOfTheGame.get("playerChoice"));
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
     }
-
     @Test
-    void getComputerChoiceTest() {
-        GameService gameService = new GameService();
+    void playGameTest() {
+        // Задаем выбор компьютера
+        String playerChoice = "rock";
+        String computerChoice = "scissors";
+        String expectedResult = "win";
 
-        Set<String> resultOfTheGame = new HashSet<String>();
-        for(int i = 0; i < 100; i++){
-            String choice = gameService.getComputerChoice();
+        // Мокаем выбор компьютера с помощью частичного мока
+        GameService gameServiceSpy = spy(gameService);
+        doReturn(computerChoice).when(gameServiceSpy).getRandomChoice();
+
+        // Выполняем игру
+        Map<String, String> resultOfTheGame = gameServiceSpy.playGame(playerChoice);
+
+        // Проверяем результаты игры
+        assertEquals(expectedResult, resultOfTheGame.get("result"));
+        assertEquals(computerChoice, resultOfTheGame.get("computerChoice"));
+        assertEquals(playerChoice, resultOfTheGame.get("playerChoice"));
+
+        // Проверяем, что сохранение игры в репозитории произошло
+        verify(gameHistoryRepository, times(1)).save(any(GameHistory.class));
+    }
+    @Test
+    void getRandomChoiceTest() {
+        Set<String> resultOfTheGame = new HashSet<>();
+        for (int i = 0; i < 100; i++) {
+            String choice = gameService.getRandomChoice();
             resultOfTheGame.add(choice);
         }
 
-        assertEquals(resultOfTheGame.contains("rock"),true);
-        assertEquals(resultOfTheGame.contains("paper"),true);
-        assertEquals(resultOfTheGame.contains("scissors"),true);
+        // Проверяем, что все варианты выбора доступны
+        assertEquals(true, resultOfTheGame.contains("rock"));
+        assertEquals(true, resultOfTheGame.contains("paper"));
+        assertEquals(true, resultOfTheGame.contains("scissors"));
     }
 
     @Test
-    void determineWinnerTest(){
-        GameService gameService = spy(new GameService());
+    void determineWinnerTest() {
+        // Используем spy для создания шпионов на gameService
+        GameService gameServiceSpy = spy(gameService);
 
-        //we win
-        doReturn("scissors").when(gameService).getComputerChoice();
-        Map<String, String> resultOfTheGame = gameService.playGame("rock");
-        assertEquals("You win!", resultOfTheGame.get("result"));
+        // Мы выигрываем
+        doReturn("scissors").when(gameServiceSpy).getRandomChoice();
+        Map<String, String> resultOfTheGame = gameServiceSpy.playGame("rock");
+        assertEquals("win", resultOfTheGame.get("result")); // Обновлено на "win"
         assertEquals("scissors", resultOfTheGame.get("computerChoice"));
         assertEquals("rock", resultOfTheGame.get("playerChoice"));
 
-        //computer win
-        doReturn("rock").when(gameService).getComputerChoice();
-        Map<String, String> resultOfTheGame2 = gameService.playGame("scissors");
-        assertEquals("Computer wins!", resultOfTheGame2.get("result"));
+        // Компьютер выигрывает
+        doReturn("rock").when(gameServiceSpy).getRandomChoice();
+        Map<String, String> resultOfTheGame2 = gameServiceSpy.playGame("scissors");
+        assertEquals("lose", resultOfTheGame2.get("result")); // Обновлено на "lose"
         assertEquals("rock", resultOfTheGame2.get("computerChoice"));
         assertEquals("scissors", resultOfTheGame2.get("playerChoice"));
 
-        //tie
-        doReturn("scissors").when(gameService).getComputerChoice();
-        Map<String, String> resultOfTheGame3 = gameService.playGame("scissors");
-        assertEquals("It's a tie!", resultOfTheGame3.get("result"));
+        // Ничья
+        doReturn("scissors").when(gameServiceSpy).getRandomChoice();
+        Map<String, String> resultOfTheGame3 = gameServiceSpy.playGame("scissors");
+        assertEquals("draw", resultOfTheGame3.get("result")); // Обновлено на "draw"
         assertEquals("scissors", resultOfTheGame3.get("computerChoice"));
         assertEquals("scissors", resultOfTheGame3.get("playerChoice"));
     }
 }
-

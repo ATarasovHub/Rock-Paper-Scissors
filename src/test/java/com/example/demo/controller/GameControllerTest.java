@@ -1,44 +1,61 @@
 package com.example.demo.controller;
 
-import com.example.demo.service.GameService;
+import com.example.demo.model.GameHistory;
+import com.example.demo.repository.GameHistoryRepository;
+import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.mockito.Mockito.when;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest
-public class GameControllerTest {
+@Transactional
+@SpringBootTest
+@AutoConfigureMockMvc
+class GameControllerIntegrationTest {
+
     @Autowired
-    private MockMvc mvc;
+    private MockMvc mockMvc;
 
-    @MockBean
-    private GameService gameService;
+    @Autowired
+    private GameHistoryRepository gameHistoryRepository;
+
+    @BeforeEach
+    void setUp() {
+        gameHistoryRepository.deleteAll(); // Очищаем базу данных перед каждым тестом
+    }
 
     @Test
     void playTest() throws Exception {
-        Map<String, String> expectedResult = new HashMap<>();
-        expectedResult.put("result", "Win");
+        // Выполняем запрос к эндпоинту /play с параметром 'rock'
+        mockMvc.perform(get("/play")
+                        .param("choice", "rock")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.playerChoice").value("rock"));
 
-        when(gameService.playGame("rock")).thenReturn(expectedResult);
-                    //Здесь мы эмулируем HTTP GET запрос на адрес /play
-        mvc.perform(get("/play")
-                        //Мы передаем параметр в запросе с именем choice и значением "rock"
-                        .param("choice", "rock"))
-                //Мы ожидаем, что статус ответа будет 200 OK,
-                // что означает, что запрос был успешно обработан.
-                .andExpect(status().isOk())
-                //Мы проверяем, что в JSON-ответе, возвращаемом сервером,
-                // есть поле result, и его значение должно быть "Win"
-                .andExpect(jsonPath("$.result").value("Win"));
+        // Проверяем, что последняя запись в базе данных соответствует выбору 'rock'
+        GameHistory lastGame = gameHistoryRepository.findAll().get(gameHistoryRepository.findAll().size() - 1);
+        assertThat(lastGame.getPlayerChoice()).isEqualTo("rock");
+    }
+    @Test
+    void testGetGameHistory() throws Exception {
+        // Подготавливаем фиктивные данные
+        GameHistory gameHistory = new GameHistory("rock", "scissors", "win", java.time.LocalDateTime.now());
+        gameHistoryRepository.save(gameHistory);
 
+        // Выполняем запрос к эндпоинту /history и проверяем результат
+        mockMvc.perform(get("/history")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].playerChoice").value("rock"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].computerChoice").value("scissors"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].result").value("win"));
     }
 }

@@ -71,3 +71,15 @@ function playGame(playerChoice) {
             // Ошибка при получении результата
         });
 }
+
+// Функция для анимации кнопки "View History"
+function animateViewHistoryButton() {
+    const viewHistoryButton = document.querySelector('#view-history button');
+    viewHistoryButton.style.transform = 'scale(1.1)';
+    setTimeout(() => {
+        viewHistoryButton.style.transform = 'scale(1)';
+    }, 300);
+}
+
+// Добавляем обработчик события для кнопки "View History"
+document.querySelector('#view-history button').addEventListener('click', animateViewHistoryButton);

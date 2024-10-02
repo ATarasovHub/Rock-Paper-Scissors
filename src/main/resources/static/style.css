@@ -1,127 +1,113 @@
-/* Stellt sicher, dass der Body die volle Höhe des Bildschirms einnimmt */
-/* Обеспечивает полную высоту тела страницы */
+/* Обеспечивает полную высоту страницы */
 html, body {
     height: 100%; /* Ensure full height for the body */
     margin: 0; /* Remove default margins */
 }
 
-/* Definiert allgemeine Stile für den Body, inklusive Hintergrundfarbe, Schriftart und Zentrierung des Inhalts */
 /* Определяет общие стили для тела страницы, включая цвет фона, шрифт и центрирование содержимого */
 body {
-    background-color: #f0f8ff;
-    font-family: 'Arial', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    background-color: #f0f8ff; /* Цвет фона */
+    font-family: 'Arial', sans-serif; /* Шрифт */
+    display: flex; /* Flexbox для центрирования */
+    justify-content: center; /* Центрирование по горизонтали */
+    align-items: center; /* Центрирование по вертикали */
+    height: 100vh; /* Высота на весь экран */
 }
 
-/* Stellt das Container-Layout ein, passt Größe an Bildschirm an, sorgt für Scrollbarkeit bei Bedarf */
 /* Устанавливает оформление контейнера, подстраивает размер под экран, обеспечивает прокрутку при необходимости */
 .container {
-    width: 90%; /* Adjust width to fit different screen sizes */
-    max-width: 400px; /* Maximum width */
-    height: auto; /* Automatic height */
-    max-height: 90vh; /* Maximum height to fit within the viewport */
-    overflow-y: auto; /* Enable vertical scrolling */
-    overflow-x: hidden; /* Prevent horizontal overflow */
-    text-align: center;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    background: linear-gradient(to right, #ff7e5f, #feb47b);
-    color: #fff;
-    box-sizing: border-box; /* Include padding in width/height */
+    width: 90%; /* Ширина контейнера */
+    max-width: 400px; /* Максимальная ширина */
+    height: auto; /* Автоматическая высота */
+    max-height: 90vh; /* Максимальная высота для экрана */
+    overflow-y: auto; /* Вертикальная прокрутка */
+    overflow-x: hidden; /* Запрет горизонтальной прокрутки */
+    text-align: center; /* Центрирование текста */
+    border-radius: 15px; /* Закругленные углы */
+    padding: 20px; /* Отступы */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Тень контейнера */
+    background: linear-gradient(to right, #ff7e5f, #feb47b); /* Градиент фона */
+    color: #fff; /* Цвет текста */
+    box-sizing: border-box; /* Учет отступов в ширине/высоте */
 }
 
-/* Stellt die Stilgröße und den Abstand der Überschrift ein */
 /* Определяет размер стиля заголовка и отступы */
 h1 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
+    font-size: 2.5em; /* Размер шрифта заголовка */
+    margin-bottom: 20px; /* Отступ снизу */
 }
 
-/* Erstellt flexibles Layout für die Auswahl von Optionen */
 /* Создает гибкую компоновку для выбора опций */
 .choices {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 30px;
+    display: flex; /* Flexbox для выбора */
+    justify-content: space-around; /* Пространство между элементами */
+    margin-bottom: 30px; /* Отступ снизу */
 }
 
-/* Stellt das Layout für jede Auswahloption ein */
 /* Определяет оформление для каждого варианта выбора */
 .choice {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    text-align: center; /* Центрирование текста внутри выбора */
+    display: flex; /* Flexbox для расположения элементов */
+    flex-direction: column; /* Вертикальное расположение */
+    align-items: center; /* Центрирование элементов */
 }
 
-/* Stellt die Größe und das Aussehen der Bilder für die Optionen ein */
 /* Устанавливает размер и вид изображений для опций */
 .choice img {
-    width: 100px; /* Image size */
-    height: 100px; /* Image size */
-    margin-bottom: 10px;
-    border-radius: 10px;
+    width: 100px; /* Размер изображения */
+    height: 100px; /* Размер изображения */
+    margin-bottom: 10px; /* Отступ снизу */
+    border-radius: 10px; /* Закругленные углы для изображений */
 }
 
-/* Stellt das Aussehen der Buttons ein, inklusive Hintergrundfarbe, Schriftgröße und Interaktionen */
 /* Определяет внешний вид кнопок, включая цвет фона, размер шрифта и взаимодействия */
 .choice button {
-    padding: 10px 20px;
-    font-size: 1.2em;
-    background-color: #fff;
-    color: #333;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
+    padding: 10px 20px; /* Отступы кнопки */
+    font-size: 1.2em; /* Размер шрифта кнопки */
+    background-color: #fff; /* Цвет фона кнопки */
+    color: #333; /* Цвет текста кнопки */
+    border: none; /* Без рамки */
+    border-radius: 5px; /* Закругленные углы кнопки */
+    cursor: pointer; /* Курсор в виде указателя */
+    transition: background-color 0.3s, transform 0.3s; /* Плавный переход при наведении */
 }
 
-/* Ändert den Stil der Buttons bei Hover-Effekten */
 /* Меняет стиль кнопок при наведении */
 .choice button:hover {
-    background-color: #ffcc00;
-    transform: scale(1.1);
+    background-color: #ffcc00; /* Цвет фона при наведении */
+    transform: scale(1.1); /* Увеличение кнопки при наведении */
 }
 
-/* Definiert das Aussehen des Computertextes für die Auswahl */
 /* Определяет внешний вид текста с выбором компьютера */
 .computer-choice {
-    margin-top: 20px;
-    font-size: 1.5em;
+    margin-top: 20px; /* Отступ сверху */
+    font-size: 1.5em; /* Размер шрифта */
 }
 
-/* Stellt das Layout des Animationscontainers ein */
 /* Устанавливает оформление контейнера с анимацией */
 #animationContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px 0;
+    display: flex; /* Flexbox для контейнера анимации */
+    justify-content: center; /* Центрирование по горизонтали */
+    align-items: center; /* Центрирование по вертикали */
+    margin: 20px 0; /* Отступы сверху и снизу */
 }
 
-/* Stellt die anfänglichen Stile für das Bild des Computers ein (versteckt und undurchsichtig) */
 /* Определяет начальные стили для изображения компьютера (скрыто и не видно) */
 .computerImage {
-    width: 120px; /* Computer image size */
-    height: 120px; /* Computer image size */
-    display: none; /* Hidden by default */
-    opacity: 0; /* Initial opacity */
-    transition: opacity 0.5s ease-in-out; /* Smooth transition */
+    width: 120px; /* Размер изображения компьютера */
+    height: 120px; /* Размер изображения компьютера */
+    display: none; /* Скрыто по умолчанию */
+    opacity: 0; /* Начальная непрозрачность */
+    transition: opacity 0.5s ease-in-out; /* Плавный переход */
 }
 
-/* Stellt das Layout und den Abstand für die Anzeige des Ergebnisses ein */
 /* Определяет компоновку и отступ для отображения результата */
 .result {
-    margin-top: 20px;
-    font-size: 1.5em;
+    margin-top: 20px; /* Отступ сверху */
+    font-size: 1.5em; /* Размер шрифта результата */
 }
 
-/* Stellt das Aussehen des Textes für das Ergebnis ein */
 /* Определяет внешний вид текста для результата */
 #resultText {
-    font-weight: bold;
+    font-weight: bold; /* Жирный шрифт */
 }
