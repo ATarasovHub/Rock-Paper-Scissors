@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game History</title>
+    <link rel="stylesheet" href="historyCSS.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Game History</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>ID <span class="sort-arrow" data-sort="id">▲</span></th>
+            <th>Player Choice <span class="sort-arrow" data-sort="playerChoice">▲</span></th>
+            <th>Computer Choice <span class="sort-arrow" data-sort="computerChoice">▲</span></th>
+            <th>Result <span class="sort-arrow" data-sort="result">▲</span></th>
+            <th>Game Date <span class="sort-arrow" data-sort="gameDate">▲</span></th>
+        </tr>
+        </thead>
+        <tbody id="historyTableBody">
+        <!-- Game history will be populated here -->
+        </tbody>
+    </table>
+    <button onclick="goBack()">Back to Game</button>
+</div>
+
+<script src="historyJS.js"></script>
+
+</body>
+</html>
