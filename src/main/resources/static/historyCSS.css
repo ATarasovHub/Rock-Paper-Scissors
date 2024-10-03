@@ -1,62 +1,169 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 20px;
-}
-
+/* Общие стили для контейнера */
 .container {
-    max-width: 800px;
-    margin: auto;
+    width: 80%;
+    margin: 0 auto;
+    font-family: 'Arial', sans-serif;
+    background-color: white;
     padding: 20px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
     text-align: center;
+    color: black;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+/* Основная таблица с вертикальной прокруткой */
+.table-scroll {
+    max-height: 400px; /* Максимальная высота прокручиваемой области */
+    overflow-y: auto; /* Вертикальная прокрутка */
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-bottom: 0; /* Убираем нижний отступ */
+    font-size: 16px;
 }
 
-th, td {
-    padding: 12px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #4CAF50;
+thead {
+    background-color: blue;
     color: white;
 }
 
-tr:hover {
-    background-color: #f1f1f1;
+thead th {
+    padding: 12px 15px;
+    text-align: left;
+    font-size: 18px;
+    text-transform: uppercase;
+    border-bottom: 2px solid gray;
+    position: sticky; /* Делаем заголовок фиксированным */
+    top: 0; /* Задаем положение сверху */
+    z-index: 10; /* Увеличиваем z-index для перекрытия содержимого */
 }
 
+tbody td {
+    padding: 10px 15px;
+    text-align: left;
+    border-bottom: 1px solid gray;
+}
+
+/* Задний фон для чередующихся строк таблицы */
+tbody tr:nth-child(even) {
+    background-color: lightgray;
+}
+
+tbody tr:hover {
+    background-color: lightblue;
+}
+
+/* Стилизация стрелочек сортировки */
+.sort-arrow {
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+/* Оформление кнопок */
 button {
-    display: block;
+    display: inline-block;
     margin: 20px auto;
     padding: 10px 20px;
-    border: none;
-    background-color: #4CAF50;
+    background-color: green;
     color: white;
-    font-size: 16px;
-    border-radius: 5px;
+    border: none;
     cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: darkgreen;
 }
-.sort-arrow {
-    font-size: 0.8em;
-    margin-left: 5px; /* Отступ для стрелки */
-    color: white; /* Цвет стрелки */
-    display: inline; /* Убедимся, что стрелка в одной линии с текстом */
+
+/* Стиль для блока с процентами побед */
+.win-percentage {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.win-percentage h2 {
+    color: black;
+    font-size: 24px;
+}
+
+.win-percentage p {
+    font-size: 20px;
+    font-weight: bold;
+    color: blue;
+}
+
+/* Кнопка возврата */
+button + button {
+    background-color: blue;
+    margin-top: 10px;
+}
+
+button + button:hover {
+    background-color: darkblue;
+}
+
+/* Стили для маленькой таблицы статистики */
+.statistics {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.stats-table {
+    width: 50%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    font-size: 16px;
+}
+
+.stats-table td {
+    padding: 8px 12px;
+    border: 1px solid gray;
+    text-align: right;
+}
+
+.stats-table td:first-child {
+    text-align: left;
+    font-weight: bold;
+}
+/* Стиль для заголовка истории игр */
+#gameHistory h2 {
+    font-size: 2em; /* Размер шрифта заголовка */
+    margin-bottom: 20px; /* Отступ снизу */
+    color: #333; /* Цвет текста заголовка */
+}
+
+/* Стиль для кнопки очистки истории */
+#clearHistoryButton {
+    padding: 10px 20px; /* Отступы кнопки */
+    font-size: 1.2em; /* Размер шрифта кнопки */
+    background-color: #ffcc00; /* Цвет фона кнопки */
+    color: #333; /* Цвет текста кнопки */
+    border: none; /* Без рамки */
+    border-radius: 5px; /* Закругленные углы кнопки */
+    cursor: pointer; /* Курсор в виде указателя */
+    transition: background-color 0.3s, transform 0.3s; /* Плавный переход при наведении */
+}
+
+/* Меняет стиль кнопки при наведении */
+#clearHistoryButton:hover {
+    background-color: #ffd700; /* Цвет фона при наведении */
+    transform: scale(1.05); /* Увеличение кнопки при наведении */
+}
+
+/* Сообщение об успешной очистке */
+#resultMessage {
+    font-size: 1.2em; /* Размер шрифта сообщения */
+    margin-top: 10px; /* Отступ сверху */
+    color: #4CAF50; /* Цвет текста сообщения */
+    opacity: 0; /* Начальная непрозрачность */
+    transition: opacity 0.5s ease; /* Плавный переход */
 }
